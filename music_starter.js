@@ -3,6 +3,7 @@ let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
 let filmX = 200
+let spoolSpin = 0
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -10,7 +11,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   textFont('Verdana'); // please use CSS safe fonts
   rectMode(CENTER)
   textSize(24);
-  
+
   push()
 
   translate(bottomFilm, 550)
@@ -23,7 +24,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     fill(212, 149, 83)
     rect(-filmX * i, 0, 180, 100)
 
-  for(let j = 0; j <= 70; j++){
+  for(let j = 0; j <= 65; j++){
     circle(circleX * j - 1310, -63, 10)
     circle(circleX * j - 1310, 62, 10)
   }
@@ -34,6 +35,16 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   if(bottomFilm < 900){
     bottomFilm = 1100
   }
+
+  pop()
+
+  push()
+
+  translate(0, 450)
+  rotate(spoolSpin)
+  image(img, -245, -255)
+
+  spoolSpin = spoolSpin +1 * vocal * 0.05
 
   pop()
 
@@ -53,7 +64,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     fill(212, 149, 83)
     rect(filmX * i, 0, 180, 100)
 
-  for(let j = 0; j <= 70; j ++){
+  for(let j = 0; j <= 65; j ++){
     circle(circleX * j - 10, -63, 10)
     circle(circleX * j - 10, 62, 10)
   }
@@ -61,7 +72,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   pop()
   
-  topFilm = topFilm +1
+  topFilm = topFilm +1 
 
   if(topFilm > -300){
     topFilm = -500

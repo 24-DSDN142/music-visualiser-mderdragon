@@ -7,8 +7,8 @@ let spoolAngle = 0
 let spoolSpin = 0
 let guitarStrings = -960
 let stringsY = 10
+let stringsX = -160
 let guitarHole = 200
-let moveHole = -2250
 
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
@@ -18,33 +18,33 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   rectMode(CENTER)
   textSize(24);
 
-  push()//bottom film roll
+  push()//draw bottom film roll
 
   translate(bottomFilm, 550)
  
   for(let i = 0; i <= 6; i ++){ 
     fill(255)
     noStroke()
-    rect(-filmX * i, 0, 200, 150)//outer white border
+    rect(-filmX * i, 0, 200, 150)//white border
   
     fill(212, 149, 83)
-    rect(-filmX * i, 0, 180, 100)//inner rect
+    rect(-filmX * i, 0, 180, 100)//inner frame
 
   for(let j = 0; j <= 65; j++){
-    circle(circleX * j - 1310, -63, 10)//roll circle cuts
+    circle(circleX * j - 1310, -63, 10)//border circles
     circle(circleX * j - 1310, 62, 10)
   }
 }
 
-  bottomFilm = bottomFilm -1
+  bottomFilm = bottomFilm -1//move bottom roll
 
-  if(bottomFilm < 900){
+  if(bottomFilm < 900){//reset bottom roll
     bottomFilm = 1100
   }
 
   pop()
 
-  if(vocal < 45){
+  if(vocal < 45){//rotate spool in accordance to vocals
     spoolSpin = map(vocal, 0, 100, 0.1, 0.4)
   }
   else{
@@ -55,7 +55,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   push()
 
-  translate(0, 450)
+  translate(0, 450)//load spool image
   rotate(spoolAngle)
   image(img, -245, -255)
 
@@ -63,60 +63,65 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   push()
 
-  rotate(335)
+  rotate(335)//rotate top film roll
 
-  push()
+  push()//draw top film roll
   
   translate(topFilm, 300)
  
   for(let i = 0; i <= 6; i ++){ 
     fill(255)
     noStroke()
-    rect(filmX * i, 0, 200, 150)
+    rect(filmX * i, 0, 200, 150)//white border
   
     fill(212, 149, 83)
-    rect(filmX * i, 0, 180, 100)
+    rect(filmX * i, 0, 180, 100)//inner frame
 
   for(let j = 0; j <= 65; j ++){
-    circle(circleX * j - 10, -63, 10)
+    circle(circleX * j - 10, -63, 10)//border circles
     circle(circleX * j - 10, 62, 10)
   }
 }
 
   noStroke()
   fill(143, 91, 48)
-  for(let i = 0; i <= 6; i ++){
-    circle(guitarHole * i, 0, 70)
+  for(let i = 0; i <= 6; i ++){//draw guitar holes
+    circle(guitarHole * i - 40, 0, 70)
   }
 
   pop()
   
-  topFilm = topFilm +1 
+  topFilm = topFilm +1 //move top roll + guitar holes
 
-  if(topFilm > -300){
+  if(topFilm > -300){//reset top roll + guitar holes
     topFilm = -500
   }
 
-  // push()
+  let strum = map(other, 0, 100, 0, 200)
 
-  // translate(moveHole, 0)
+  stroke(255)
+
+  if(strum > 145){
+    strokeWeight(2)
+  }
+  else{
+    strokeWeight(4)
+  }
+  
+  for(let k = 0; k <= 6; k ++){//draw guitar strings
+    line(stringsX, stringsY * k + 270, guitarStrings, stringsY * k + 270)
+  }
 
  
 
-  // pop()
+  if(guitarStrings >= 800){
+    stringsX = -100
 
-  // moveHole = moveHole +1
-  // if(moveHole > -300){
-  //   movehole = -500
-  // }
-
-  stroke(255)
-  strokeWeight(3)
-  for(let k = 0; k <= 6; k ++){
-  line(-150, stringsY * k + 270, guitarStrings, stringsY * k + 270)
+    stringsX = stringsX +1
   }
-
-  guitarStrings = guitarStrings +1
+  else{
+    guitarStrings = guitarStrings +1//move guitar strings
+  }
 
   pop()
 

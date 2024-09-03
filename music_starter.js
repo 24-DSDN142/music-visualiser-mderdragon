@@ -3,7 +3,13 @@ let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
 let filmX = 200
+let spoolAngle = 0
 let spoolSpin = 0
+let guitarStrings = -960
+let stringsY = 10
+let guitarHole = 200
+let moveHole = -2250
+
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -12,20 +18,20 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   rectMode(CENTER)
   textSize(24);
 
-  push()
+  push()//bottom film roll
 
   translate(bottomFilm, 550)
  
   for(let i = 0; i <= 6; i ++){ 
     fill(255)
     noStroke()
-    rect(-filmX * i, 0, 200, 150)
+    rect(-filmX * i, 0, 200, 150)//outer white border
   
     fill(212, 149, 83)
-    rect(-filmX * i, 0, 180, 100)
+    rect(-filmX * i, 0, 180, 100)//inner rect
 
   for(let j = 0; j <= 65; j++){
-    circle(circleX * j - 1310, -63, 10)
+    circle(circleX * j - 1310, -63, 10)//roll circle cuts
     circle(circleX * j - 1310, 62, 10)
   }
 }
@@ -38,13 +44,20 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   pop()
 
+  if(vocal < 45){
+    spoolSpin = map(vocal, 0, 100, 0.1, 0.4)
+  }
+  else{
+    spoolSpin = map(vocal, 0, 100, 0.4, 2)
+  }
+  spoolAngle = spoolAngle + spoolSpin
+  
+
   push()
 
   translate(0, 450)
-  rotate(spoolSpin)
+  rotate(spoolAngle)
   image(img, -245, -255)
-
-  spoolSpin = spoolSpin +1 * vocal * 0.05
 
   pop()
 
@@ -70,6 +83,12 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   }
 }
 
+  noStroke()
+  fill(143, 91, 48)
+  for(let i = 0; i <= 6; i ++){
+    circle(guitarHole * i, 0, 70)
+  }
+
   pop()
   
   topFilm = topFilm +1 
@@ -78,7 +97,29 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     topFilm = -500
   }
 
+  // push()
+
+  // translate(moveHole, 0)
+
+ 
+
+  // pop()
+
+  // moveHole = moveHole +1
+  // if(moveHole > -300){
+  //   movehole = -500
+  // }
+
+  stroke(255)
+  strokeWeight(3)
+  for(let k = 0; k <= 6; k ++){
+  line(-150, stringsY * k + 270, guitarStrings, stringsY * k + 270)
+  }
+
+  guitarStrings = guitarStrings +1
+
   pop()
+
 
   
 }

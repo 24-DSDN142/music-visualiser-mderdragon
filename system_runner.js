@@ -43,7 +43,8 @@ function songLoadedSoFar(soFar) {
 function preload() {
   table = loadTable('volumes.csv', 'csv');
   words = loadStrings('words.txt');
-  img = loadImage('spool.png')
+  imgSpool = loadImage('spool.png')
+  imgBook = loadImage('book.jpg')
 }
 
 let volumes = [];

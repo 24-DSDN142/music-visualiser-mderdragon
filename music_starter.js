@@ -11,6 +11,9 @@ let guitarHole = 200
 let wordStart = false
 let moveHole = -2250
 let guitarStop = 5
+let moveBook = -2340
+let rollSpeed = 2
+
 
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
@@ -38,7 +41,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   }
 }
 
-  bottomFilm = bottomFilm -1//move bottom roll
+  bottomFilm = bottomFilm - rollSpeed//move bottom roll
 
   if(bottomFilm < 900){//reset bottom roll
     bottomFilm = 1100
@@ -57,9 +60,9 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   push()
 
-  translate(0, 450)//load spool image
+  translate(100, 450)//load spool image
   rotate(spoolAngle)
-  image(img, -245, -255)
+  image(imgSpool, -245, -255)
 
   pop()
 
@@ -92,7 +95,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
     noStroke()
     fill(143, 91, 48)
-    for(let i = 0; i <= guitarStop; i ++){//draw guitar holes
+    for(let i = 0; i <= 5; i ++){//draw guitar holes
       circle(guitarHole * i + 160, 0, 70)
   }
 
@@ -111,30 +114,49 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   for(let h = 0; h <= 5; h ++){//draw guitar strings
     for(let k = 0; k <= 6; k ++){
-      line(guitarStrings - 1 - (200 * h), stringsY * k + 270 ,guitarStrings - 179 - (200 * h) , stringsY * k + 270)
+      line(guitarStrings - 1 - (200 * h), stringsY * k + 270, guitarStrings - 179 - (200 * h) , stringsY * k + 270)
     }
   }
 
-  topFilm = topFilm +1 //move top roll + guitar
-  guitarStrings = guitarStrings +1
-  moveHole = moveHole +1
+  topFilm = topFilm + rollSpeed //move top roll + guitar
+  guitarStrings = guitarStrings + rollSpeed
+  moveHole = moveHole + rollSpeed
 
-  if(topFilm >= -300){//reset top roll + guitar holes
+  if(topFilm >= -300){//reset top roll
     topFilm = -500
-    if(wordStart == false){
-      guitarStrings = 990
-      moveHole = 100
-    }
+  }
+  
+  pencilWiggle = map(vocal, 0, 100, 60, 90)
+
+  for(let i = 0; i <=4; i ++){//load book frames
+    image(imgBook, moveBook - (200 * i), 250)
+
+    push()//draw pencil
+
+    translate(moveBook + 115 - (200 * i), 283)
+    rotate(pencilWiggle)
+
+    strokeWeight(1)
+    stroke(143, 91, 48)
+    fill(245, 202, 157)
+    triangle(-2.5, -10, 0, 0, 2.5, -10)
+    fill(212, 149, 83)
+    rect(0, -25, 5, 30)
+    fill(143, 48, 48)
+    rect(0, -40, 5, 5)
+
+    pop()
   }
 
-  if(vocal > 50 && wordStart == false){
-    wordStart = true
-    guitarStop = 5
-  }
+  moveBook = moveBook + rollSpeed//move book
 
+  
+  
   pop()
 
+  
 
+  
   
 }
 

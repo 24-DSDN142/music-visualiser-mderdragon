@@ -10,6 +10,7 @@ let stringsY = 10
 let guitarHole = 200
 let wordStart = false
 let moveHole = -2250
+let guitarStop = 5
 
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
@@ -91,8 +92,8 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
     noStroke()
     fill(143, 91, 48)
-    for(let i = 0; i <= 6; i ++){//draw guitar holes
-      circle(guitarHole * i - 40, 0, 70)
+    for(let i = 0; i <= guitarStop; i ++){//draw guitar holes
+      circle(guitarHole * i + 160, 0, 70)
   }
 
   pop()
@@ -108,7 +109,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     strokeWeight(4)
   }
 
-  for(let h = 0; h <= 6; h ++){//draw guitar strings
+  for(let h = 0; h <= 5; h ++){//draw guitar strings
     for(let k = 0; k <= 6; k ++){
       line(guitarStrings - 1 - (200 * h), stringsY * k + 270 ,guitarStrings - 179 - (200 * h) , stringsY * k + 270)
     }
@@ -122,12 +123,13 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     topFilm = -500
     if(wordStart == false){
       guitarStrings = 990
-      moveHole = -500
+      moveHole = 100
     }
   }
 
   if(vocal > 50 && wordStart == false){
     wordStart = true
+    guitarStop = 5
   }
 
   pop()

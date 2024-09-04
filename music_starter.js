@@ -7,8 +7,9 @@ let spoolAngle = 0
 let spoolSpin = 0
 let guitarStrings = -960
 let stringsY = 10
-let stringsX = -160
 let guitarHole = 200
+let wordStart = false
+let moveHole = -2250
 
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
@@ -82,45 +83,51 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     circle(circleX * j - 10, 62, 10)
   }
 }
+  pop()
 
-  noStroke()
-  fill(143, 91, 48)
-  for(let i = 0; i <= 6; i ++){//draw guitar holes
-    circle(guitarHole * i - 40, 0, 70)
+  push()
+
+  translate(moveHole, 300)
+
+    noStroke()
+    fill(143, 91, 48)
+    for(let i = 0; i <= 6; i ++){//draw guitar holes
+      circle(guitarHole * i - 40, 0, 70)
   }
 
   pop()
-  
-  topFilm = topFilm +1 //move top roll + guitar holes
 
-  if(topFilm > -300){//reset top roll + guitar holes
-    topFilm = -500
-  }
+  let strum = map(other, 0, 100, 0, 200)//strum in accordance to other
 
-  let strum = map(other, 0, 100, 0, 200)
+  stroke(245, 202, 157)
 
-  stroke(255)
-
-  if(strum > 145){
+  if(strum > 145){//toggle string vibration
     strokeWeight(2)
   }
   else{
     strokeWeight(4)
   }
-  
-  for(let k = 0; k <= 6; k ++){//draw guitar strings
-    line(stringsX, stringsY * k + 270, guitarStrings, stringsY * k + 270)
+
+  for(let h = 0; h <= 6; h ++){//draw guitar strings
+    for(let k = 0; k <= 6; k ++){
+      line(guitarStrings - 1 - (200 * h), stringsY * k + 270 ,guitarStrings - 179 - (200 * h) , stringsY * k + 270)
+    }
   }
 
- 
+  topFilm = topFilm +1 //move top roll + guitar
+  guitarStrings = guitarStrings +1
+  moveHole = moveHole +1
 
-  if(guitarStrings >= 800){
-    stringsX = -100
-
-    stringsX = stringsX +1
+  if(topFilm >= -300){//reset top roll + guitar holes
+    topFilm = -500
+    if(wordStart == false){
+      guitarStrings = 990
+      moveHole = -500
+    }
   }
-  else{
-    guitarStrings = guitarStrings +1//move guitar strings
+
+  if(vocal > 50 && wordStart == false){
+    wordStart = true
   }
 
   pop()

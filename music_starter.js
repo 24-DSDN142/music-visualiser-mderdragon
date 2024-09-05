@@ -12,7 +12,7 @@ let wordStart = false
 let moveHole = -2250
 let guitarStop = 5
 let moveBook = -2340
-let rollSpeed = 2
+let rollSpeed = 1
 
 
 
@@ -126,9 +126,9 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     topFilm = -500
   }
   
-  pencilWiggle = map(vocal, 0, 100, 60, 90)
+  pencilWiggle = map(other, 0, 100, 50, 90)
 
-  for(let i = 0; i <=4; i ++){//load book frames
+  for(let i = 0; i <=3; i ++){//load book frames
     image(imgBook, moveBook - (200 * i), 250)
 
     push()//draw pencil

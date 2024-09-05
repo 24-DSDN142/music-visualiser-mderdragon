@@ -45,6 +45,10 @@ function preload() {
   words = loadStrings('words.txt');
   imgSpool = loadImage('spool.png')
   imgBook = loadImage('book.jpg')
+  imgMedkit = loadImage('medkit.png')
+  imgPageflipI = loadImage('pageflip1.jpg')
+  imgPageflipII = loadImage('pageflip2.jpg')
+  imgHeart = loadImage('heart.png')
 }
 
 let volumes = [];

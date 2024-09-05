@@ -12,7 +12,10 @@ let wordStart = false
 let moveHole = -2250
 let guitarStop = 5
 let moveBook = -2340
-let rollSpeed = 1
+let rollSpeed = 5
+let moveKit = -3140
+let moveBallad = -3940
+let moveLovesong = -4340
 
 
 
@@ -131,12 +134,12 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for(let i = 0; i <=3; i ++){//load book frames
     image(imgBook, moveBook - (200 * i), 250)
 
-    push()//draw pencil
+    push()
 
     translate(moveBook + 115 - (200 * i), 283)
-    rotate(pencilWiggle)
+    rotate(pencilWiggle)//wiggle pencil
 
-    strokeWeight(1)
+    strokeWeight(1)//draw pencil
     stroke(143, 91, 48)
     fill(245, 202, 157)
     triangle(-2.5, -10, 0, 0, 2.5, -10)
@@ -146,16 +149,68 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     rect(0, -40, 5, 5)
 
     pop()
+
   }
 
   moveBook = moveBook + rollSpeed//move book
 
+  bloodSpread = map(other, 0, 100, -0.5, 1.4)
+
+  for(let i = 0; i <=3; i ++){//load med kit
+    noStroke()
+    fill(143, 91, 48)
+    rect(moveKit + 90 - (200 * i), 300, 180, 100)
+    image(imgMedkit, moveKit - (200 * i), 250)
+
+    push()
+
+    translate(moveKit + 180 - (200 * i), 300)
+    scale(bloodSpread)
+
+    fill(143, 48, 48)
+    arc(0, 10, 100, 30, 90, 270)
+    arc(0, -10, 50, 15, 90, 270)
+
+    pop()
+  }
+
+  moveKit = moveKit + rollSpeed//move med kit
+
+  pageFlip = map(other, 0, 100, 0, 200)
+
+  for(let i = 0; i <= 1; i ++){//load page flipping
+    if(pageFlip > 145){
+      image(imgPageflipI, moveBallad - (200 * i), 250)
+    }
+    else{
+      image(imgPageflipII, moveBallad - (200 * i), 250)
+    }
+  }
   
-  
+  moveBallad = moveBallad + rollSpeed//move page flipping
+
+  heartScale = map(other, 0, 100, 0.5, 0.7)
+
+  for(let i = 0; i <=1; i ++){//load small heart
+    noStroke()
+    fill(143, 91, 48)
+    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)
+
+    push()
+
+    translate(moveLovesong - 20 - (200 * i), 275)
+    scale(heartScale)
+
+    image(imgHeart, 0, 0)
+
+    pop()
+  }
+
+  moveLovesong = moveLovesong + rollSpeed
+
   pop()
 
   
-
   
   
 }

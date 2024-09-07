@@ -2,27 +2,38 @@ let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
 let filmX = 200
+let rollSpeed = 1
+
 let spoolAngle = 0
 let spoolSpin = 0
+
 let guitarStrings = -960
 let stringsY = 10
 let guitarHole = 200
-let wordStart = false
 let moveHole = -2250
 let guitarStop = 5
+
 let moveBook = -2340
-let rollSpeed = 1
 let moveKit = -3140
 let moveBallad = -3940
 let moveLovesong = -4540
+let moveLines = -4850
+let moveLyrics = -5050
+
 let quaverNote = false
 let beamNote = false
 let noteTimer = 10
+
 let converging = 89
 let diverging = 300
-let moveLines = -4850
 
-
+let lyricTimer = 5
+let wordI = false
+let wordKnow = false
+let wordIts = false
+let wordFor = false
+let wordThe = false
+let wordBetter = false
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -245,7 +256,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   moveLovesong = moveLovesong + rollSpeed
 
 
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 1; i++) {
     noStroke()
     fill(143, 91, 48)
     rect(moveLines - (200 * i), 300, 180, 100)
@@ -273,14 +284,91 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   converging = converging - 0.4
 
+  lyrics = map(vocal, 0, 100, 0, 200)
 
   if (converging <= 10) {
     diverging = diverging + 0.4
   }
 
+  if (lyricTimer > 5) {
+    if (lyrics > 160 && wordI == false) {
+      wordI = true
+    } else if (lyrics > 160 && wordI == true && wordKnow == false) {
+      wordKnow = true
+    } else if (lyrics > 160 && wordKnow == true && wordIts == false) {
+      wordIts = true
+    } else if (lyrics > 160 && wordIts == true && wordFor == false) {
+      wordFor = true
+    } else if (lyrics > 160 && wordFor == true && wordThe == false) {
+      wordThe = true
+    } else if (lyrics > 160 && wordThe == true) {
+      wordBetter = true
+    } else if (lyrics > 165 && wordBetter == true) {
+      wordI = false
+      wordKnow = false
+      wordIts = false
+      wordFor = false
+      wordThe = false
+      wordBetter = false
+    }
 
+    lyricTimer = 0
+  }
 
+if(moveLyrics > -100){
+  for (let i = 0; i <= 1; i++) {
+    noStroke()
+    fill(143, 91, 48)
+    rect(moveLyrics - (200 * i), 300, 180, 100)
 
+    textFont('font')
+    fill(245, 202, 157)
+    noStroke()
+
+    if (wordI == true) {
+      text("i", moveLyrics -70 - (200 * i), 295)
+    }
+
+    if (wordKnow == true) {
+      text("i", moveLyrics -70 - (200 * i), 295)
+      text("know", moveLyrics -55 - (200 * i), 295)
+    }
+
+    if (wordIts == true) {
+      text("i", moveLyrics -70 - (200 * i), 295)
+      text("know", moveLyrics -55 - (200 * i), 295)
+      text("it's", moveLyrics + 5 - (200 * i), 295)
+    }
+
+    if (wordFor == true) {
+      text("i", moveLyrics -70 - (200 * i), 295)
+      text("know", moveLyrics -55 - (200 * i), 295)
+      text("it's", moveLyrics + 5 - (200 * i), 295)
+      text("for", moveLyrics + 40 (200 * i), 295)
+    }
+
+    if (wordThe == true) {
+      text("i", moveLyrics -70 - (200 * i), 295)
+      text("know", moveLyrics -55 - (200 * i), 295)
+      text("it's", moveLyrics + 5 - (200 * i), 295)
+      text("for", moveLyrics + 40 - (200 * i), 295)
+      text("the", moveLyrics - 30 - (200 * i), 325)
+    }
+
+    if (wordBetter == true) {
+      text("i", moveLyrics -70 - (200 * i), 295)
+      text("know", moveLyrics -55 - (200 * i), 295)
+      text("it's", moveLyrics + 5 - (200 * i), 295)
+      text("for", moveLyrics + 40 (200 * i), 295)
+      text("the", moveLyrics - 30 - (200 * i), 325)
+      stroke(143, 48, 48)
+      text("better.", moveLyrics + 10 - (200 * i), 325)
+    }
+  }
+  }
+
+  lyricTimer = lyricTimer + 1
+  moveLyrics = moveLyrics + rollSpeed
 
   pop()
 

@@ -15,6 +15,7 @@ let songIsPlaying = false;
 let songEpoch = 0;              // millis when song starts
 let table;
 let words;
+let font;
 
 function songLoadedError() {
   songButton.elt.innerHTML = "Song: Load Error";
@@ -43,12 +44,16 @@ function songLoadedSoFar(soFar) {
 function preload() {
   table = loadTable('volumes.csv', 'csv');
   words = loadStrings('words.txt');
+  font = loadFont('brushscript.otf')
   imgSpool = loadImage('spool.png')
   imgBook = loadImage('book.jpg')
   imgMedkit = loadImage('medkit.png')
   imgPageflipI = loadImage('pageflip1.jpg')
   imgPageflipII = loadImage('pageflip2.jpg')
   imgHeart = loadImage('heart.png')
+  // imgWaveI = loadImage('wave1.jpg')
+  // imgWaveII = loadImage('wave2.jpg')
+  // imgWaveIII = loadImage('wave3.jpg')
 }
 
 let volumes = [];

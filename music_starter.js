@@ -15,7 +15,7 @@ let moveBook = -2340
 let rollSpeed = 5
 let moveKit = -3140
 let moveBallad = -3940
-let moveLovesong = -4340
+let moveLovesong = -4540
 
 
 
@@ -63,7 +63,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   push()
 
-  translate(100, 450)//load spool image
+  translate(0, 450)//load spool image
   rotate(spoolAngle)
   image(imgSpool, -245, -255)
 
@@ -178,7 +178,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   pageFlip = map(other, 0, 100, 0, 200)
 
-  for(let i = 0; i <= 1; i ++){//load page flipping
+  for(let i = 0; i <= 2; i ++){//load page flipping
     if(pageFlip > 145){
       image(imgPageflipI, moveBallad - (200 * i), 250)
     }
@@ -191,19 +191,40 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   heartScale = map(other, 0, 100, 0.5, 0.7)
 
-  for(let i = 0; i <=1; i ++){//load small heart
+  for(let i = 0; i <=1; i ++){
     noStroke()
     fill(143, 91, 48)
-    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)
+    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)//load small heart
 
     push()
 
-    translate(moveLovesong - 20 - (200 * i), 275)
-    scale(heartScale)
+    translate(moveLovesong + 70 - (200 * i), 325)
+    scale(heartScale)//heartbeat
 
-    image(imgHeart, 0, 0)
+    image(imgHeart, -140, -75)
 
     pop()
+
+    push()
+    
+    fill(245, 202, 157)
+    stroke(245, 202, 157)
+    strokeWeight(3)
+
+    circle(moveLovesong + 90 - (200 * i), 315, 10)
+    line(moveLovesong + 95 - (200 * i), 315, moveLovesong + 90 - (200 * i), 285)
+    line(moveLovesong + 90 - (200 * i), 285, moveLovesong + 100 - (200 * i), 295)
+
+    //musicNote = map(other, 0, 100, 0, 200)
+
+    //if(musicNote > 145){
+      circle(moveLovesong + 135 - (200 * i), 295, 10)
+      line(moveLovesong + 140 - (200 * i), 295, moveLovesong + 145 - (200 * i), 275)
+
+      circle(moveLovesong + 155 - (200 * i), 305, 10)
+      line(moveLovesong + 160 - (200 * i), 305, moveLovesong + 165 - (200 * i), 285)
+      line(moveLovesong + 145 - (200 * i), 275, moveLovesong + 165 - (200 * i), 285)
+   // }
   }
 
   moveLovesong = moveLovesong + rollSpeed

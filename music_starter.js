@@ -1,4 +1,3 @@
-
 let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
@@ -12,10 +11,16 @@ let wordStart = false
 let moveHole = -2250
 let guitarStop = 5
 let moveBook = -2340
-let rollSpeed = 5
+let rollSpeed = 1
 let moveKit = -3140
 let moveBallad = -3940
 let moveLovesong = -4540
+let quaverNote = false
+let beamNote = false
+let noteTimer = 10
+let converging = 89
+let diverging = 300
+let moveLines = -4850
 
 
 
@@ -26,44 +31,43 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   rectMode(CENTER)
   textSize(24);
 
-  push()//draw bottom film roll
+  push() //draw bottom film roll
 
   translate(bottomFilm, 550)
- 
-  for(let i = 0; i <= 6; i ++){ 
+
+  for (let i = 0; i <= 6; i++) {
     fill(255)
     noStroke()
-    rect(-filmX * i, 0, 200, 150)//white border
-  
+    rect(-filmX * i, 0, 200, 150) //white border
+
     fill(212, 149, 83)
-    rect(-filmX * i, 0, 180, 100)//inner frame
+    rect(-filmX * i, 0, 180, 100) //inner frame
 
-  for(let j = 0; j <= 65; j++){
-    circle(circleX * j - 1310, -63, 10)//border circles
-    circle(circleX * j - 1310, 62, 10)
+    for (let j = 0; j <= 65; j++) {
+      circle(circleX * j - 1310, -63, 10) //border circles
+      circle(circleX * j - 1310, 62, 10)
+    }
   }
-}
 
-  bottomFilm = bottomFilm - rollSpeed//move bottom roll
+  bottomFilm = bottomFilm - rollSpeed //move bottom roll
 
-  if(bottomFilm < 900){//reset bottom roll
+  if (bottomFilm < 900) { //reset bottom roll
     bottomFilm = 1100
   }
 
   pop()
 
-  if(vocal < 45){//rotate spool in accordance to vocals
+  if (vocal < 45) { //rotate spool in accordance to vocals
     spoolSpin = map(vocal, 0, 100, 0.1, 0.4)
-  }
-  else{
+  } else {
     spoolSpin = map(vocal, 0, 100, 0.4, 2)
   }
   spoolAngle = spoolAngle + spoolSpin
-  
+
 
   push()
 
-  translate(0, 450)//load spool image
+  translate(0, 450) //load spool image
   rotate(spoolAngle)
   image(imgSpool, -245, -255)
 
@@ -71,53 +75,52 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   push()
 
-  rotate(335)//rotate top film roll
+  rotate(335) //rotate top film roll
 
-  push()//draw top film roll
-  
+  push() //draw top film roll
+
   translate(topFilm, 300)
- 
-  for(let i = 0; i <= 6; i ++){ 
+
+  for (let i = 0; i <= 6; i++) {
     fill(255)
     noStroke()
-    rect(filmX * i, 0, 200, 150)//white border
-  
-    fill(212, 149, 83)
-    rect(filmX * i, 0, 180, 100)//inner frame
+    rect(filmX * i, 0, 200, 150) //white border
 
-  for(let j = 0; j <= 65; j ++){
-    circle(circleX * j - 10, -63, 10)//border circles
-    circle(circleX * j - 10, 62, 10)
+    fill(212, 149, 83)
+    rect(filmX * i, 0, 180, 100) //inner frame
+
+    for (let j = 0; j <= 65; j++) {
+      circle(circleX * j - 10, -63, 10) //border circles
+      circle(circleX * j - 10, 62, 10)
+    }
   }
-}
   pop()
 
   push()
 
   translate(moveHole, 300)
 
-    noStroke()
-    fill(143, 91, 48)
-    for(let i = 0; i <= 5; i ++){//draw guitar holes
-      circle(guitarHole * i + 160, 0, 70)
+  noStroke()
+  fill(143, 91, 48)
+  for (let i = 0; i <= 5; i++) { //draw guitar holes
+    circle(guitarHole * i + 160, 0, 70)
   }
 
   pop()
 
-  let strum = map(other, 0, 100, 0, 200)//strum in accordance to other
+  let strum = map(other, 0, 100, 0, 200) //strum in accordance to other
 
   stroke(245, 202, 157)
 
-  if(strum > 145){//toggle string vibration
+  if (strum > 145) { //toggle string vibration
     strokeWeight(2)
-  }
-  else{
+  } else {
     strokeWeight(4)
   }
 
-  for(let h = 0; h <= 5; h ++){//draw guitar strings
-    for(let k = 0; k <= 6; k ++){
-      line(guitarStrings - 1 - (200 * h), stringsY * k + 270, guitarStrings - 179 - (200 * h) , stringsY * k + 270)
+  for (let h = 0; h <= 5; h++) { //draw guitar strings
+    for (let k = 0; k <= 6; k++) {
+      line(guitarStrings - 1 - (200 * h), stringsY * k + 270, guitarStrings - 179 - (200 * h), stringsY * k + 270)
     }
   }
 
@@ -125,21 +128,21 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   guitarStrings = guitarStrings + rollSpeed
   moveHole = moveHole + rollSpeed
 
-  if(topFilm >= -300){//reset top roll
+  if (topFilm >= -300) { //reset top roll
     topFilm = -500
   }
-  
+
   pencilWiggle = map(other, 0, 100, 50, 90)
 
-  for(let i = 0; i <=3; i ++){//load book frames
+  for (let i = 0; i <= 3; i++) { //load book frames
     image(imgBook, moveBook - (200 * i), 250)
 
     push()
 
     translate(moveBook + 115 - (200 * i), 283)
-    rotate(pencilWiggle)//wiggle pencil
+    rotate(pencilWiggle) //wiggle pencil
 
-    strokeWeight(1)//draw pencil
+    strokeWeight(1) //draw pencil
     stroke(143, 91, 48)
     fill(245, 202, 157)
     triangle(-2.5, -10, 0, 0, 2.5, -10)
@@ -152,11 +155,11 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   }
 
-  moveBook = moveBook + rollSpeed//move book
+  moveBook = moveBook + rollSpeed //move book
 
   bloodSpread = map(other, 0, 100, -0.5, 1.4)
 
-  for(let i = 0; i <=3; i ++){//load med kit
+  for (let i = 0; i <= 3; i++) { //load med kit
     noStroke()
     fill(143, 91, 48)
     rect(moveKit + 90 - (200 * i), 300, 180, 100)
@@ -164,7 +167,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
     push()
 
-    translate(moveKit + 180 - (200 * i), 300)
+    translate(moveKit + 179 - (200 * i), 300)
     scale(bloodSpread)
 
     fill(143, 48, 48)
@@ -174,66 +177,113 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     pop()
   }
 
-  moveKit = moveKit + rollSpeed//move med kit
+  moveKit = moveKit + rollSpeed //move med kit
 
   pageFlip = map(other, 0, 100, 0, 200)
 
-  for(let i = 0; i <= 2; i ++){//load page flipping
-    if(pageFlip > 145){
+  for (let i = 0; i <= 2; i++) { //load page flipping
+    if (pageFlip > 145) {
       image(imgPageflipI, moveBallad - (200 * i), 250)
-    }
-    else{
+    } else {
       image(imgPageflipII, moveBallad - (200 * i), 250)
     }
   }
-  
-  moveBallad = moveBallad + rollSpeed//move page flipping
+
+  moveBallad = moveBallad + rollSpeed //move page flipping
 
   heartScale = map(other, 0, 100, 0.5, 0.7)
 
-  for(let i = 0; i <=1; i ++){
+  for (let i = 0; i <= 1; i++) {
     noStroke()
     fill(143, 91, 48)
-    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)//load small heart
+    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)
 
     push()
 
-    translate(moveLovesong + 70 - (200 * i), 325)
-    scale(heartScale)//heartbeat
+    translate(moveLovesong + 70 - (200 * i), 325) //position bottom left corner
+    scale(heartScale) //heartbeat
 
     image(imgHeart, -140, -75)
 
     pop()
 
-    push()
-    
     fill(245, 202, 157)
     stroke(245, 202, 157)
     strokeWeight(3)
 
-    circle(moveLovesong + 90 - (200 * i), 315, 10)
-    line(moveLovesong + 95 - (200 * i), 315, moveLovesong + 90 - (200 * i), 285)
-    line(moveLovesong + 90 - (200 * i), 285, moveLovesong + 100 - (200 * i), 295)
+    musicNotes = map(other, 0, 100, 0, 200)
 
-    //musicNote = map(other, 0, 100, 0, 200)
+    if (noteTimer >= 10) {
+      if (musicNotes > 145 && quaverNote == false) {
+        quaverNote = true
+      } else if (musicNotes > 145 && quaverNote == true && beamNote == false) {
+        beamNote = true
+      } else if (musicNotes > 145 && beamNote == true) {
+        quaverNote = false
+        beamNote = false
+      }
 
-    //if(musicNote > 145){
+      noteTimer = 0
+    }
+
+    if (quaverNote == true) {
+      circle(moveLovesong + 90 - (200 * i), 315, 10)
+      line(moveLovesong + 95 - (200 * i), 315, moveLovesong + 90 - (200 * i), 285)
+      line(moveLovesong + 90 - (200 * i), 285, moveLovesong + 100 - (200 * i), 295)
+    }
+
+    if (beamNote == true) {
       circle(moveLovesong + 135 - (200 * i), 295, 10)
       line(moveLovesong + 140 - (200 * i), 295, moveLovesong + 145 - (200 * i), 275)
-
       circle(moveLovesong + 155 - (200 * i), 305, 10)
       line(moveLovesong + 160 - (200 * i), 305, moveLovesong + 165 - (200 * i), 285)
       line(moveLovesong + 145 - (200 * i), 275, moveLovesong + 165 - (200 * i), 285)
-   // }
+    }
   }
 
+  noteTimer = noteTimer + 1
   moveLovesong = moveLovesong + rollSpeed
+
+
+  for (let i = 0; i <= 3; i++) {
+    noStroke()
+    fill(143, 91, 48)
+    rect(moveLines - (200 * i), 300, 180, 100)
+
+    stroke(245, 202, 157)
+    strokeWeight(6)
+
+    if (diverging < 350) {
+      if (converging > 10) {
+        line(moveLines - 89 - (200 * i), 300, moveLines - (200 * i) - converging, 300)
+        line(moveLines + 89 - (200 * i), 300, moveLines - (200 * i) + converging, 300)
+      } else {
+        line(moveLines - 89 - (200 * i), 300, moveLines - 10 - (200 * i), 300)
+        line(moveLines + 89 - (200 * i), 300, moveLines + 10 - (200 * i), 300)
+        line(moveLines - 10 - (200 * i), 300, moveLines - (200 * i) + diverging - 310, diverging)
+        line(moveLines + 10 - (200 * i), 300, moveLines - (200 * i) - diverging + 310, -diverging + 600)
+      }
+    } else {
+      converging = 89
+      diverging = 300
+    }
+  }
+
+  moveLines = moveLines + rollSpeed
+
+  converging = converging - 0.4
+
+
+  if (converging <= 10) {
+    diverging = diverging + 0.4
+  }
+
+
+
+
 
   pop()
 
-  
-  
-  
 }
 
 // let bar_spacing = height / 10;

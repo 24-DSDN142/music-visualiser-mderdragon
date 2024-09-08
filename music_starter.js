@@ -8,8 +8,10 @@ let spoolAngle = 0
 let spoolSpin = 0
 
 let guitarStrings = -960
-let stringsY = 10
+let stringsY = 12
 let guitarHole = 200
+let bassStrings = -5760
+let bassStringsY = 20
 
 let moveHole = -2250
 let moveBook = -2340
@@ -18,6 +20,7 @@ let moveBallad = -3940
 let moveLovesong = -4540
 let moveLines = -4850
 let moveLyrics = -5250
+let moveWaves = -7540
 
 let quaverNote = false
 let beamNote = false
@@ -34,8 +37,13 @@ let wordFor = false
 let wordThe = false
 let wordBetter = false
 
-let bassStrings = -5760
-let bassStringsY = 15
+let waveTimer = 20
+let waveI = false
+let waveII = false
+let waveIII = false
+let midWave = 0
+
+
 
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
@@ -116,9 +124,9 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   noStroke()
   fill(143, 91, 48)
-  for (let i = 0; i <= 5; i++) { //draw guitar holes
-    circle(guitarHole * i + 160, 0, 70)
-    circle(guitarHole * i - 4640, 0, 70)
+  for (let i = 0; i <= 7; i++) { //draw guitar holes
+    circle(guitarHole * i - 240, 0, 70)
+    circle(guitarHole * i - 5040, 0, 70)
   }
 
   pop()
@@ -128,13 +136,13 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   stroke(245, 202, 157)
 
   if (strum > 145) { //toggle string vibration
-    strokeWeight(2)
-  } else {
     strokeWeight(4)
+  } else {
+    strokeWeight(2)
   }
 
   for (let h = 0; h <= 5; h++) { //draw guitar strings
-    for (let k = 0; k <= 6; k++) {
+    for (let k = 0; k <= 5; k++) {
       line(guitarStrings - 1 - (200 * h), stringsY * k + 270, guitarStrings - 179 - (200 * h), stringsY * k + 270)
     }
   }
@@ -144,13 +152,13 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   stroke(245, 202, 157)
 
   if (bassStrum > 145) { //toggle string vibration
-    strokeWeight(2)
-  } else {
     strokeWeight(4)
+  } else {
+    strokeWeight(2)
   }
 
-  for (let h = 0; h <= 7; h++) { //draw guitar strings
-    for (let k = 0; k <= 4; k++) {
+  for (let h = 0; h <= 7; h++) { //draw bass strings
+    for (let k = 0; k <= 3; k++) {
       line(bassStrings - 1 - (200 * h), bassStringsY * k + 270, bassStrings	 - 179 - (200 * h), bassStringsY * k + 270)
     }
   }
@@ -326,18 +334,8 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
       } else if (lyrics > 157 && wordThe == true && wordBetter == false) {
         wordBetter = true
       }
-        //  else if (lyrics > 155 && wordBetter == true) {
-      //   wordI = false
-      //   wordKnow = false
-      //   wordIts = false
-      //   wordFor = false
-      //   wordThe = false
-      //   wordBetter = false
-      // }
     }
   }
-
- //   lyricTimer = 0
 
   for (let i = 0; i <= 2; i++) {
     noStroke()
@@ -378,9 +376,49 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   if (moveLyrics >= -100){
     lyricTimer = lyricTimer + 1
   }
+
   moveLyrics = moveLyrics + rollSpeed
 
+  waves = map(bass, 0, 100, 0, 200)
 
+  if (waveTimer >= 20) {
+    if (waves > 145 && waveI == false) {
+      waveI = true
+    } else if (waves > 145 && waveI == true && waveII == false) {
+      waveII = true
+    } else if (waves > 145 && waveII == true && waveIII == false && midWave == 0) {
+      waveIII = true
+      midWave = midWave + 1
+    } else if (waves > 145 && waveII == true && waveIII == true) {
+      waveIII = false
+    } else if (waves > 145 && waveII == true && waveIII == false && midWave == 1) {
+      waveII = false
+      midWave = midWave + 1
+    } 
+
+    if(midWave > 1){
+      midWave = 0
+    }
+
+    waveTimer = 0
+  }
+
+  for (let i = 0; i <= 4; i++) {
+    if(waveI == true){
+      image(imgWaveI, moveWaves - (200 * i), 250)
+    }
+
+    if(waveII == true){
+      image(imgWaveII, moveWaves - (200 * i), 250)
+    }
+
+    if (waveIII == true){
+      image(imgWaveIII, moveWaves - (200 * i), 250)
+    }
+  }
+
+  waveTimer = waveTimer + 1
+  moveWaves = moveWaves + rollSpeed
 
   pop()
 

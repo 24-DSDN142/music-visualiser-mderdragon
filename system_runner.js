@@ -51,9 +51,9 @@ function preload() {
   imgPageflipI = loadImage('pageflip1.jpg')
   imgPageflipII = loadImage('pageflip2.jpg')
   imgHeart = loadImage('heart.png')
-  // imgWaveI = loadImage('wave1.jpg')
-  // imgWaveII = loadImage('wave2.jpg')
-  // imgWaveIII = loadImage('wave3.jpg')
+  imgWaveI = loadImage('waves1.jpg')
+  imgWaveII = loadImage('waves2.jpg')
+  imgWaveIII = loadImage('waves3.jpg')
 }
 
 let volumes = [];

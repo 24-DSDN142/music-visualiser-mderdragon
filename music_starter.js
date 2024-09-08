@@ -2,7 +2,7 @@ let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
 let filmX = 200
-let rollSpeed = 1
+let rollSpeed = 4
 
 let spoolAngle = 0
 let spoolSpin = 0
@@ -21,6 +21,8 @@ let moveLovesong = -4540
 let moveLines = -4850
 let moveLyrics = -5250
 let moveWaves = -7540
+let moveLungs = -8340
+let moveGun = -8940
 
 let quaverNote = false
 let beamNote = false
@@ -419,6 +421,31 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   waveTimer = waveTimer + 1
   moveWaves = moveWaves + rollSpeed
+
+  lungScale = map(bass, 0, 100, 0.7, 1)
+
+  for (let i = 0; i <= 2; i++) {
+    noStroke()
+    fill(143, 91, 48)
+    rect(moveLungs + 90 - (200 * i), 300, 180, 100)
+
+    push()
+
+    translate(moveLungs + 90 - (200 * i), 300)
+    scale(lungScale)
+    image(imgLungs, -90, -50)
+
+    pop()
+  }
+
+  moveLungs = moveLungs + rollSpeed
+
+  for (let i = 0; i <= 4; i++) {
+    image(imgGun, moveGun - (200 * i), 250)
+    
+  }
+
+  moveGun = moveGun + rollSpeed
 
   pop()
 

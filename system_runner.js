@@ -54,6 +54,8 @@ function preload() {
   imgWaveI = loadImage('waves1.jpg')
   imgWaveII = loadImage('waves2.jpg')
   imgWaveIII = loadImage('waves3.jpg')
+  imgLungs = loadImage('lungs.png')
+  imgGun = loadImage('gun.jpg')
 }
 
 let volumes = [];

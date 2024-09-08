@@ -24,6 +24,7 @@ let moveWaves = -7540
 let moveLungs = -8340
 let moveGun = -8940
 let moveCar = -9340
+let moveHeart = -9940
 
 let quaverNote = false
 let beamNote = false
@@ -236,7 +237,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   moveBallad = moveBallad + rollSpeed //move page flipping
 
-  heartScale = map(other, 0, 100, 0.5, 0.7)
+  lovesongScale = map(other, 0, 100, 0.5, 0.7)
 
   for (let i = 0; i <= 1; i++) {
     noStroke()
@@ -246,7 +247,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     push()
 
     translate(moveLovesong + 70 - (200 * i), 325) //position bottom left corner
-    scale(heartScale) //heartbeat
+    scale(lovesongScale) //heartbeat
 
     image(imgHeart, -140, -75)
 
@@ -457,7 +458,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   car = map(bass, 0, 100, 0, 200)
 
-  for (let i = 0; i <= 1; i++) { //load page flipping
+  for (let i = 0; i <= 2; i++) { //load page flipping
     if (car > 145) {
       image(imgCarI, moveCar - (200 * i), 250)
     } else {
@@ -466,6 +467,24 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   }
 
   moveCar = moveCar + rollSpeed
+
+  heartScale = map(bass, 0, 100, 0.2, 1)
+
+  for (let i = 0; i <= 3; i++) {
+    noStroke()
+    fill(143, 91, 48)
+    rect(moveHeart + 90 - (200 * i), 300, 180, 100)
+
+    push()
+
+    translate(moveHeart + 90 - (200 * i), 300)
+    scale(heartScale)
+    image(imgHeart, -90, -50)
+
+    pop()
+  }
+
+  moveHeart = moveHeart + rollSpeed
 
   pop()
 

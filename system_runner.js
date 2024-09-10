@@ -59,7 +59,10 @@ function preload() {
   imgGunsmoke = loadImage('gunsmoke.jpg')
   imgCarI = loadImage('car1.jpg')
   imgCarII = loadImage('car2.jpg')
-  imgWheel = loadImage('wheel.png')
+  imgPixelsI = loadImage('pixels1.jpg')
+  imgPixelsII = loadImage('pixels2.jpg')
+  imgLovesong = loadImage('lovesong.jpg')
+  imgLines = loadImage('lines.jpg')
 }
 
 let volumes = [];

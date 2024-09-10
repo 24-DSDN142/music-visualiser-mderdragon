@@ -2,7 +2,7 @@ let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
 let filmX = 200
-let rollSpeed = 1
+let rollSpeed = 4
 
 let spoolAngle = 0
 let spoolSpin = 0
@@ -25,6 +25,7 @@ let moveLungs = -8340
 let moveGun = -8940
 let moveCar = -9340
 let moveHeart = -9940
+let moveFlash = -11940
 
 let quaverNote = false
 let beamNote = false
@@ -47,6 +48,17 @@ let waveII = false
 let waveIII = false
 let midWave = 0
 
+let flashTimer = 20
+let book = false
+let medkit = false
+let ballad = false
+let lovesong = false
+let lines = false
+let wave = false
+let lungs = false
+let gun = false
+let drive = false
+let heart = false
 
 
 
@@ -81,6 +93,16 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   if (bottomFilm < 900) { //reset bottom roll
     bottomFilm = 1100
+  }
+
+  pixels = map(drum, 0, 100, 0, 200)
+
+  for (let i = 0; i <= 6; i++) {
+    if(pixels > 100){
+      image(imgPixelsI, -filmX * i + -90, -50)
+    } else {
+      image(imgPixelsII, -filmX * i + -90, -50)
+    }
   }
 
   pop()
@@ -133,6 +155,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for (let i = 0; i <= 7; i++) { //draw guitar holes
     circle(guitarHole * i - 240, 0, 70)
     circle(guitarHole * i - 5040, 0, 70)
+    circle(guitarHole * i - 9840, 0, 70)
   }
 
   pop()
@@ -150,6 +173,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for (let h = 0; h <= 5; h++) { //draw guitar strings
     for (let k = 0; k <= 5; k++) {
       line(guitarStrings - 1 - (200 * h), stringsY * k + 270, guitarStrings - 179 - (200 * h), stringsY * k + 270)
+      line(guitarStrings - 9600 - (200 * h), stringsY * k + 270, guitarStrings - 9780 - (200 * h), stringsY * k + 270)
     }
   }
 
@@ -339,7 +363,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
         wordThe = true
       } else if (lyrics > 157 && wordThe == true && wordBetter == false) {
         wordBetter = true
-      }
+      } 
     }
   }
 
@@ -347,6 +371,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     noStroke()
     fill(143, 91, 48)
     rect(moveLyrics - (200 * i), 300, 180, 100)
+    rect(moveLyrics - (400 * i) - 6400, 300, 180, 100)
 
     textFont('font')
     fill(245, 202, 157)
@@ -354,27 +379,33 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     if(moveLyrics > -100){
     if (wordI == true) {
       text("i", moveLyrics -70 - (200 * i), 295)
+      text("i", moveLyrics -6470 - (400 * i), 295)
     }
 
     if (wordKnow == true) {
       text("know", moveLyrics -55 - (200 * i), 295)
+      text("know", moveLyrics -6455 - (400 * i), 295)
     }
 
     if (wordIts == true) {
       text("it's", moveLyrics + 5 - (200 * i), 295)
+      text("it's", moveLyrics - 6395 - (400 * i), 295)
     }
 
     if (wordFor == true) {
       text("for", moveLyrics + 40 - (200 * i), 295)
+      text("for", moveLyrics - 6360 - (400 * i), 295)
     }
 
     if (wordThe == true) {
       text("the", moveLyrics - 30 - (200 * i), 325)
+      text("the", moveLyrics - 6430 - (400 * i), 325)
     }
 
     if (wordBetter == true) {
       stroke(143, 48, 48)
       text("better.", moveLyrics + 10 - (200 * i), 325)
+      text("better.", moveLyrics - 6390 - (400 * i), 325)
     }
   }
   }
@@ -384,6 +415,11 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   }
 
   moveLyrics = moveLyrics + rollSpeed
+
+  if(moveLyrics > 7300){
+    moveLyrics = 6901
+    moveFlash = 204
+  }
 
   waves = map(bass, 0, 100, 0, 200)
 
@@ -486,14 +522,109 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   moveHeart = moveHeart + rollSpeed
 
+  flashing = map(other, 0, 100, 0, 200)
+
+  if (flashTimer >= 25) {
+    if (flashing > 100 && book == false) {
+      book = true
+    } else if (flashing > 100 && book == true && medkit == false) {
+      medkit = true
+    } else if (flashing > 100 && medkit == true && ballad == false) {
+      ballad = true
+    } else if (flashing > 100 && ballad == true && lovesong == false) {
+      lovesong = true
+    } else if (flashing > 100 && lovesong == true && lines == false) {
+      lines = true
+    } else if (flashing > 100 && lines == true && wave == false) {
+      wave = true
+    } else if (flashing > 100 && wave == true && lungs == false) {
+      lungs = true
+    } else if (flashing > 100 && lungs == true && gun == false) {
+      gun = true
+    } else if (flashing > 100 && gun == true && drive == false) {
+      drive = true
+    } else if (flashing > 100 && drive == true && heart == false) {
+      heart = true
+    } else if (flashing > 100 && heart == true) {
+      medkit = false
+      ballad = false
+      lovesong = false
+      lines = false
+      wave = false
+      lungs = false
+      gun = false
+      drive = false
+      heart = false
+    }
+
+    flashTimer = 0
+  }
+  
+  for (let i = 0; i <= 2; i++) {
+
+    if(book == true){
+      image(imgBook, moveFlash - (400 * i), 250)
+    }
+
+    if(medkit == true){
+      rect(moveFlash + 90 - (400 * i), 300, 180, 100)
+      image(imgMedkit, moveFlash - (400 * i), 250)
+    }
+
+    if (ballad == true){
+      image(imgPageflipI, moveFlash - (400 * i), 250)
+    }
+
+    if (lovesong == true){
+      image(imgLovesong, moveFlash - (400 * i), 250)
+    }
+
+    if (lines == true){
+      image(imgLines, moveFlash - (400 * i), 250)
+    }
+
+    if (wave == true){
+      image(imgWaveII, moveFlash - (400 * i), 250)
+    }
+
+    if (lungs == true){
+      rect(moveFlash + 90 - (400 * i), 300, 180, 100)
+      image(imgLungs, moveFlash - (400 * i), 250)
+    }
+
+    if (gun == true){
+      rect(moveFlash + 90 - (400 * i), 300, 180, 100)
+      image(imgGun, moveFlash - (400 * i), 250)
+    }
+
+    if (drive == true){
+      image(imgCarI, moveFlash - (400 * i), 250)
+    }
+
+    if (heart == true){
+      rect(moveFlash + 90 - (400 * i), 300, 180, 100)
+      image(imgHeart, moveFlash - (400 * i), 250)
+    }
+  }
+
+  flashTimer = flashTimer + 1
+  moveFlash = moveFlash + rollSpeed
+  
+  
+
+
+  
   pop()
 
-  // if (tickTest >= 50){
+ 
+}
+
+ // if (tickTest >= 50){
   //   line(0,0,100,100)
   //   tickTest = 0
   // }
   // tickTest = tickTest + 1
-}
+
 
 // let bar_spacing = height / 10;
 // let bar_height = width / 12;

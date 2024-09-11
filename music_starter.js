@@ -2,7 +2,7 @@ let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
 let filmX = 200
-let rollSpeed = 4
+let rollSpeed = 1
 
 let spoolAngle = 0
 let spoolSpin = 0

@@ -1,3 +1,7 @@
+let redValue = 212
+let greenValue = 149
+let blueValue = 83
+
 let bottomFilm = 2000
 let topFilm = -2250
 let circleX = 20
@@ -66,10 +70,41 @@ let heart = false
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
-  background(212, 149, 83)
-  textFont('Verdana'); // please use CSS safe fonts
+  background(redValue, greenValue, blueValue)
+  textFont('font'); // please use CSS safe fonts
   rectMode(CENTER)
   textSize(24);
+
+  fill(143, 91, 48) //draw film projector
+  noStroke()
+  rect(675, 475, 200, 350)
+  rect(675, 625, 250, 50)
+  rect(675, 650, 150, 50)
+  circle(560, 350, 75)
+  ellipse(560, 470, 75, 120)
+  noFill()
+  stroke(245, 202, 157)
+  strokeWeight(10)
+  rect(675, 475, 100, 300)
+  stroke(212, 149, 83)
+  strokeWeight(20)
+  line(600, 365, 700, 425)
+  circle(560, 350, 5)
+  ellipse(560, 470, 5, 50)
+
+  if(moveFlash >= 200){ //change background to red
+  if(redValue > 143){
+    redValue = redValue - 0.025
+  }
+  
+  if(greenValue > 48){
+    greenValue = greenValue - 0.025
+  }
+
+  if(blueValue > 48){
+    blueValue = blueValue - 0.025
+  }
+}
 
   push() //draw bottom film roll
 
@@ -84,8 +119,8 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     rect(-filmX * i, 0, 180, 100) //inner frame
 
     for (let j = 0; j <= 65; j++) {
-      circle(circleX * j - 1310, -63, 10) //border circles
-      circle(circleX * j - 1310, 62, 10)
+      circle(circleX * j - 1290, -63, 10) //border circles
+      circle(circleX * j - 1290, 62, 10)
     }
   }
 
@@ -98,7 +133,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   pixels = map(drum, 0, 100, 0, 200)
 
   for (let i = 0; i <= 6; i++) {
-    if(pixels > 100){
+    if(pixels > 150){
       image(imgPixelsI, -filmX * i + -90, -50)
     } else {
       image(imgPixelsII, -filmX * i + -90, -50)
@@ -238,10 +273,10 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     push()
 
     translate(moveKit + 179 - (200 * i), 300)
-    scale(bloodSpread)
+    scale(bloodSpread)//size of blood
 
     fill(143, 48, 48)
-    arc(0, 10, 100, 30, 90, 270)
+    arc(0, 10, 100, 30, 90, 270)//blood circles
     arc(0, -10, 50, 15, 90, 270)
 
     pop()
@@ -266,14 +301,14 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for (let i = 0; i <= 1; i++) {
     noStroke()
     fill(143, 91, 48)
-    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)
+    rect(moveLovesong + 90 - (200 * i), 300, 180, 100)//background
 
     push()
 
     translate(moveLovesong + 70 - (200 * i), 325) //position bottom left corner
     scale(lovesongScale) //heartbeat
 
-    image(imgHeart, -140, -75)
+    image(imgHeart, -140, -75)//load heart
 
     pop()
 
@@ -283,26 +318,26 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
     musicNotes = map(other, 0, 100, 0, 200)
 
-    if (noteTimer >= 10) {
-      if (musicNotes > 145 && quaverNote == false) {
+    if (noteTimer >= 10) { //load music notes sequentially
+      if (musicNotes > 145 && quaverNote == false) { //quaver appears
         quaverNote = true
-      } else if (musicNotes > 145 && quaverNote == true && beamNote == false) {
+      } else if (musicNotes > 145 && quaverNote == true && beamNote == false) { //beam appears
         beamNote = true
-      } else if (musicNotes > 145 && beamNote == true) {
+      } else if (musicNotes > 145 && beamNote == true) { //both notes disappear
         quaverNote = false
         beamNote = false
       }
 
-      noteTimer = 0
+      noteTimer = 0 //reset sequence
     }
 
-    if (quaverNote == true) {
+    if (quaverNote == true) { //draw quaver
       circle(moveLovesong + 90 - (200 * i), 315, 10)
       line(moveLovesong + 95 - (200 * i), 315, moveLovesong + 90 - (200 * i), 285)
       line(moveLovesong + 90 - (200 * i), 285, moveLovesong + 100 - (200 * i), 295)
     }
 
-    if (beamNote == true) {
+    if (beamNote == true) { //draw beam
       circle(moveLovesong + 135 - (200 * i), 295, 10)
       line(moveLovesong + 140 - (200 * i), 295, moveLovesong + 145 - (200 * i), 275)
       circle(moveLovesong + 155 - (200 * i), 305, 10)
@@ -318,22 +353,22 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for (let i = 0; i <= 1; i++) {
     noStroke()
     fill(143, 91, 48)
-    rect(moveLines - (200 * i), 300, 180, 100)
+    rect(moveLines - (200 * i), 300, 180, 100) //background
 
     stroke(245, 202, 157)
     strokeWeight(6)
 
-    if (diverging < 350) {
-      if (converging > 10) {
-        line(moveLines - 89 - (200 * i), 300, moveLines - (200 * i) - converging, 300)
-        line(moveLines + 89 - (200 * i), 300, moveLines - (200 * i) + converging, 300)
-      } else {
-        line(moveLines - 89 - (200 * i), 300, moveLines - 10 - (200 * i), 300)
-        line(moveLines + 89 - (200 * i), 300, moveLines + 10 - (200 * i), 300)
-        line(moveLines - 10 - (200 * i), 300, moveLines - (200 * i) + diverging - 310, diverging)
-        line(moveLines + 10 - (200 * i), 300, moveLines - (200 * i) - diverging + 310, -diverging + 600)
+    if (diverging < 350) { //start drawing lines
+      if (converging > 10) { //converging
+        line(moveLines - 89 - (200 * i), 300, moveLines - (200 * i) - converging, 300) //left line
+        line(moveLines + 89 - (200 * i), 300, moveLines - (200 * i) + converging, 300) //right line
+      } else { //diverging
+        line(moveLines - 89 - (200 * i), 300, moveLines - 10 - (200 * i), 300) //paused left line
+        line(moveLines + 89 - (200 * i), 300, moveLines + 10 - (200 * i), 300) //paused right line
+        line(moveLines - 10 - (200 * i), 300, moveLines - (200 * i) + diverging - 310, diverging) //left line
+        line(moveLines + 10 - (200 * i), 300, moveLines - (200 * i) - diverging + 310, -diverging + 600) // right line
       }
-    } else {
+    } else { //repeat animation
       converging = 89
       diverging = 300
     }
@@ -349,7 +384,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   lyrics = map(vocal, 0, 100, 0, 200)
 
-  if (lyricTimer >= 35) {
+  if (lyricTimer >= 35) { //vocal timing
     if (moveLyrics > -100){
       if (lyrics > 160 && wordI == false) {
         wordI = true
@@ -370,10 +405,10 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for (let i = 0; i <= 2; i++) {
     noStroke()
     fill(143, 91, 48)
-    rect(moveLyrics - (200 * i), 300, 180, 100)
+    rect(moveLyrics - (200 * i), 300, 180, 100) //backgrounds
     rect(moveLyrics - (400 * i) - 6400, 300, 180, 100)
 
-    textFont('font')
+    //textFont('font')
     fill(245, 202, 157)
     noStroke()
     if(moveLyrics > -100){
@@ -403,7 +438,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     }
 
     if (wordBetter == true) {
-      stroke(143, 48, 48)
+      stroke(143, 48, 48) //red outline
       text("better.", moveLyrics + 10 - (200 * i), 325)
       text("better.", moveLyrics - 6390 - (400 * i), 325)
     }
@@ -416,9 +451,9 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   moveLyrics = moveLyrics + rollSpeed
 
-  if(moveLyrics > 7300){
+  if(moveLyrics > 7300){ //reset for repeat
     moveLyrics = 6901
-    moveFlash = 204
+    moveFlash = 209
   }
 
   waves = map(bass, 0, 100, 0, 200)
@@ -467,12 +502,12 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   for (let i = 0; i <= 2; i++) {
     noStroke()
     fill(143, 91, 48)
-    rect(moveLungs + 90 - (200 * i), 300, 180, 100)
+    rect(moveLungs + 90 - (200 * i), 300, 180, 100) //background
 
     push()
 
-    translate(moveLungs + 90 - (200 * i), 300)
-    scale(lungScale)
+    translate(moveLungs + 90 - (200 * i), 300) //centre origin
+    scale(lungScale) //breathing
     image(imgLungs, -90, -50)
 
     pop()
@@ -482,7 +517,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   gunSmoke = map(bass, 0, 100, 0, 200)
 
-  for (let i = 0; i <= 1; i++) { //load page flipping
+  for (let i = 0; i <= 1; i++) { //load gun and smoking gun
     if (gunSmoke > 145) {
       image(imgGunsmoke, moveGun - (200 * i), 250)
     } else {
@@ -494,7 +529,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   car = map(bass, 0, 100, 0, 200)
 
-  for (let i = 0; i <= 2; i++) { //load page flipping
+  for (let i = 0; i <= 2; i++) { //load car images
     if (car > 145) {
       image(imgCarI, moveCar - (200 * i), 250)
     } else {
@@ -525,7 +560,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   flashing = map(other, 0, 100, 0, 200)
 
   if (flashTimer >= 25) {
-    if (flashing > 100 && book == false) {
+    if (flashing > 145 && book == false) {
       book = true
     } else if (flashing > 100 && book == true && medkit == false) {
       medkit = true
@@ -567,8 +602,12 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     }
 
     if(medkit == true){
+      fill(143, 91, 48)
       rect(moveFlash + 90 - (400 * i), 300, 180, 100)
       image(imgMedkit, moveFlash - (400 * i), 250)
+      fill(143, 48, 48)
+      arc(moveFlash + 179 - (400 * i), 310, 100, 30, 90, 270)
+      arc(moveFlash + 179 - (400 * i), 290, 50, 15, 90, 270)
     }
 
     if (ballad == true){
@@ -588,13 +627,14 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     }
 
     if (lungs == true){
+      fill(143, 91, 48)
       rect(moveFlash + 90 - (400 * i), 300, 180, 100)
       image(imgLungs, moveFlash - (400 * i), 250)
     }
 
     if (gun == true){
       rect(moveFlash + 90 - (400 * i), 300, 180, 100)
-      image(imgGun, moveFlash - (400 * i), 250)
+      image(imgGunsmoke, moveFlash - (400 * i), 250)
     }
 
     if (drive == true){
@@ -609,14 +649,16 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 
   flashTimer = flashTimer + 1
   moveFlash = moveFlash + rollSpeed
-  
-  
 
-
-  
   pop()
 
- 
+  push()
+
+  translate(700, 100)
+  rotate(spoolAngle)
+  image(imgSpool, -245, -255)
+
+  pop()
 }
 
  // if (tickTest >= 50){

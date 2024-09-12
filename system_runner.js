@@ -1,5 +1,5 @@
-const canvasWidth = 540;
-const canvasHeight = 960;
+const canvasWidth = 700;
+const canvasHeight = 700;
 
 
 let mainCanvas;
@@ -15,6 +15,7 @@ let songIsPlaying = false;
 let songEpoch = 0;              // millis when song starts
 let table;
 let words;
+let font;
 
 function songLoadedError() {
   songButton.elt.innerHTML = "Song: Load Error";
@@ -43,6 +44,25 @@ function songLoadedSoFar(soFar) {
 function preload() {
   table = loadTable('volumes.csv', 'csv');
   words = loadStrings('words.txt');
+  font = loadFont('brushscript.otf')
+  imgSpool = loadImage('spool.png')
+  imgBook = loadImage('book.jpg')
+  imgMedkit = loadImage('medkit.png')
+  imgPageflipI = loadImage('pageflip1.jpg')
+  imgPageflipII = loadImage('pageflip2.jpg')
+  imgHeart = loadImage('heart.png')
+  imgWaveI = loadImage('waves1.jpg')
+  imgWaveII = loadImage('waves2.jpg')
+  imgWaveIII = loadImage('waves3.jpg')
+  imgLungs = loadImage('lungs.png')
+  imgGun = loadImage('gun.jpg')
+  imgGunsmoke = loadImage('gunsmoke.jpg')
+  imgCarI = loadImage('car1.jpg')
+  imgCarII = loadImage('car2.jpg')
+  imgPixelsI = loadImage('pixels1.jpg')
+  imgPixelsII = loadImage('pixels2.jpg')
+  imgLovesong = loadImage('lovesong.jpg')
+  imgLines = loadImage('lines.jpg')
 }
 
 let volumes = [];
